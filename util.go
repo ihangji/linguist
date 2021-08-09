@@ -3,13 +3,13 @@ package linguist
 import (
 	"bufio"
 	"bytes"
-	"log"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 
 	"github.com/ghodss/yaml"
+	log "github.com/sirupsen/logrus"
 )
 
 var (

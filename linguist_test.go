@@ -6,9 +6,20 @@ import (
 )
 
 var (
-	appPythonPath   = filepath.Join("testdata", "app-python")
-	appEmptydirPath = filepath.Join("testdata", "app-emptydir")
+	appPythonPath   = filepath.Join("Testdata", "app-python")
+	appEmptydirPath = filepath.Join("Testdata", "app-emptydir")
+	appPythonfile   = filepath.Join("Testdata", "app-python", "app.py")
 )
+
+func TestProcessFile(t *testing.T) {
+	output, err := ProcessFile(appPythonfile)
+	if err != nil {
+		t.Error("expected detect to pass")
+	}
+	if output != "Python" {
+		t.Errorf("expected output == 'Python', got '%s'", output)
+	}
+}
 
 func TestProcessDir(t *testing.T) {
 	output, err := ProcessDir(appPythonPath)
@@ -36,11 +47,11 @@ func TestGitAttributes(t *testing.T) {
 		path         string
 		expectedLang string
 	}{
-		{filepath.Join("testdata", "app-duck"), "Duck"},
-		{filepath.Join("testdata", "app-vendored"), "Python"},
-		{filepath.Join("testdata", "app-not-vendored"), "HTML"},
-		{filepath.Join("testdata", "app-documentation"), "Python"},
-		{filepath.Join("testdata", "app-generated"), "Python"},
+		{filepath.Join("Testdata", "app-duck"), "Duck"},
+		{filepath.Join("Testdata", "app-vendored"), "Python"},
+		{filepath.Join("Testdata", "app-not-vendored"), "HTML"},
+		{filepath.Join("Testdata", "app-documentation"), "Python"},
+		{filepath.Join("Testdata", "app-generated"), "Python"},
 	}
 
 	for _, tc := range testCases {
