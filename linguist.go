@@ -18,6 +18,10 @@ var (
 	isDetectedInGitAttributes func(filename string) string
 )
 
+func init() {
+	log.SetLevel(log.DebugLevel)
+}
+
 // used for displaying results
 type (
 	// Language is the programming langage and the percentage on how sure linguist feels about its
