@@ -154,6 +154,7 @@ func detectInterpreter(contents []byte) string {
 //
 // (this simply calls IsVendored and IsDocumentation)
 func ShouldIgnoreFilename(filename string) bool {
+	filename = filepath.ToSlash(filename)
 	vendored := IsVendored(filename)
 	documentation := IsDocumentation(filename)
 	return vendored || documentation
@@ -169,6 +170,8 @@ func ShouldIgnoreContents(contents []byte) bool {
 
 // IsVendored checks if path contains a filename commonly belonging to configuration files.
 func IsVendored(path string) bool {
+	log.Debugln(vendorRE)
+	log.Debugf(path)
 	return vendorRE.MatchString(path)
 }
 
