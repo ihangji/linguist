@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	appPythonPath   = filepath.Join("Testdata", "app-python")
+	appgolang       = filepath.Join("Testdata", "app-golang")
 	appEmptydirPath = filepath.Join("Testdata", "app-emptydir")
 	appPythonfile   = filepath.Join("Testdata", "app-python", "app.py")
 )
@@ -22,12 +22,12 @@ func TestProcessFile(t *testing.T) {
 }
 
 func TestProcessDir(t *testing.T) {
-	output, err := ProcessDir(appPythonPath)
+	output, err := ProcessDir(appgolang)
 	if err != nil {
 		t.Error("expected detect to pass")
 	}
-	if output[0].Language != "Python" {
-		t.Errorf("expected output == 'Python', got '%s'", output[0].Language)
+	if output[0].Language != "Go" {
+		t.Errorf("expected output == 'Go', got '%s'", output[0].Language)
 	}
 
 	// test with a bad dir
