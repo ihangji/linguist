@@ -1,3 +1,16 @@
+/*
+Copyright 2020-2021 Ihangji, Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package linguist
 
 import (
@@ -287,6 +300,45 @@ func ProcessDir(dirname string) ([]*Language, error) {
 	}
 	sort.Sort(sort.Reverse(sortableResult(results)))
 	return results, nil
+}
+
+// ProcessFile read a file and returns a languages within that file.
+func ProcessFile(filename string) (string, error) {
+	exists, err := Exists(filename)
+	if err != nil {
+		return "", err
+	}
+	if !exists {
+		return "", os.ErrNotExist
+	}
+	fileInfo, err := os.Stat(filename)
+	if err != nil {
+		return "", err
+	}
+	if fileInfo.Size() == 0 {
+		log.Debugln(filename, "is empty file")
+		return "", err
+	}
+	if fileInfo.IsDir() {
+		log.Debugln(filename, "is directory, please use ProcessDir")
+	} else if (fileInfo.Mode() & os.ModeSymlink) == 0 {
+		if ShouldIgnoreFilename(filename) {
+			log.Debugf("%s: filename should be ignored, skipping", filename)
+			return "", err
+		}
+		byName := LanguageByFilename(filename)
+		contents, err := fileGetContents(filename)
+		if err != nil {
+			return "", err
+		}
+		hints := LanguageHints(filename)
+		byData := LanguageByContents(contents, hints)
+		if byData != "" {
+			return byData, nil
+		}
+		return byName, nil
+	}
+	return "", fmt.Errorf("%s can not find the language", filename)
 }
 
 // Alias returns the language name for a given known alias.

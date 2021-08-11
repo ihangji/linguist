@@ -6,17 +6,28 @@ import (
 )
 
 var (
-	appPythonPath   = filepath.Join("testdata", "app-python")
-	appEmptydirPath = filepath.Join("testdata", "app-emptydir")
+	appgolang       = filepath.Join("_testdata", "app-golang")
+	appEmptydirPath = filepath.Join("_testdata", "app-emptydir")
+	appPythonfile   = filepath.Join("_testdata", "app-python", "app.py")
 )
 
-func TestProcessDir(t *testing.T) {
-	output, err := ProcessDir(appPythonPath)
+func TestProcessFile(t *testing.T) {
+	output, err := ProcessFile(appPythonfile)
 	if err != nil {
 		t.Error("expected detect to pass")
 	}
-	if output[0].Language != "Python" {
-		t.Errorf("expected output == 'Python', got '%s'", output[0].Language)
+	if output != "Python" {
+		t.Errorf("expected output == 'Python', got '%s'", output)
+	}
+}
+
+func TestProcessDir(t *testing.T) {
+	output, err := ProcessDir(appgolang)
+	if err != nil {
+		t.Error("expected detect to pass")
+	}
+	if output[0].Language != "Go" {
+		t.Errorf("expected output == 'Go', got '%s'", output[0].Language)
 	}
 
 	// test with a bad dir
@@ -36,11 +47,11 @@ func TestGitAttributes(t *testing.T) {
 		path         string
 		expectedLang string
 	}{
-		{filepath.Join("testdata", "app-duck"), "Duck"},
-		{filepath.Join("testdata", "app-vendored"), "Python"},
-		{filepath.Join("testdata", "app-not-vendored"), "HTML"},
-		{filepath.Join("testdata", "app-documentation"), "Python"},
-		{filepath.Join("testdata", "app-generated"), "Python"},
+		{filepath.Join("_testdata", "app-duck"), "Duck"},
+		{filepath.Join("_testdata", "app-vendored"), "Python"},
+		{filepath.Join("_testdata", "app-not-vendored"), "HTML"},
+		{filepath.Join("_testdata", "app-documentation"), "Python"},
+		{filepath.Join("_testdata", "app-generated"), "Python"},
 	}
 
 	for _, tc := range testCases {
@@ -58,7 +69,7 @@ func TestGitAttributes(t *testing.T) {
 
 //TestDirectoryIsIgnored checks to see if directory paths such as 'docs/' are ignored from being classified by linguist when added to the "ignore" list.
 func TestDirectoryIsIgnored(t *testing.T) {
-	path := filepath.Join("testdata", "app-documentation")
+	path := filepath.Join("_testdata", "app-documentation")
 	// populate isIgnored
 	ProcessDir(path)
 	ignorePath := filepath.Join(path, "docs")
