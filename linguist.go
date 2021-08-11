@@ -335,9 +335,8 @@ func ProcessFile(filename string) (string, error) {
 		byData := LanguageByContents(contents, hints)
 		if byData != "" {
 			return byData, nil
-		} else {
-			return byName, nil
 		}
+		return byName, nil
 	}
 	return "", fmt.Errorf("%s can not find the language", filename)
 }
