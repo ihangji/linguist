@@ -1,5 +1,6 @@
 # linguist
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/ihangji/linguist)](https://goreportcard.com/report/github.com/ihangji/linguist)
 [![GoDoc](https://godoc.org/github.com/ihangji/linguist?status.svg)](https://godoc.org/github.com/ihangji/linguist)
 
 Go port of github linguist.
