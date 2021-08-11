@@ -6,9 +6,9 @@ import (
 )
 
 var (
-	appgolang       = filepath.Join("Testdata", "app-golang")
-	appEmptydirPath = filepath.Join("Testdata", "app-emptydir")
-	appPythonfile   = filepath.Join("Testdata", "app-python", "app.py")
+	appgolang       = filepath.Join("_testdata", "app-golang")
+	appEmptydirPath = filepath.Join("_testdata", "app-emptydir")
+	appPythonfile   = filepath.Join("_testdata", "app-python", "app.py")
 )
 
 func TestProcessFile(t *testing.T) {
@@ -47,11 +47,11 @@ func TestGitAttributes(t *testing.T) {
 		path         string
 		expectedLang string
 	}{
-		{filepath.Join("Testdata", "app-duck"), "Duck"},
-		{filepath.Join("Testdata", "app-vendored"), "Python"},
-		{filepath.Join("Testdata", "app-not-vendored"), "HTML"},
-		{filepath.Join("Testdata", "app-documentation"), "Python"},
-		{filepath.Join("Testdata", "app-generated"), "Python"},
+		{filepath.Join("_testdata", "app-duck"), "Duck"},
+		{filepath.Join("_testdata", "app-vendored"), "Python"},
+		{filepath.Join("_testdata", "app-not-vendored"), "HTML"},
+		{filepath.Join("_testdata", "app-documentation"), "Python"},
+		{filepath.Join("_testdata", "app-generated"), "Python"},
 	}
 
 	for _, tc := range testCases {
@@ -69,7 +69,7 @@ func TestGitAttributes(t *testing.T) {
 
 //TestDirectoryIsIgnored checks to see if directory paths such as 'docs/' are ignored from being classified by linguist when added to the "ignore" list.
 func TestDirectoryIsIgnored(t *testing.T) {
-	path := filepath.Join("testdata", "app-documentation")
+	path := filepath.Join("_testdata", "app-documentation")
 	// populate isIgnored
 	ProcessDir(path)
 	ignorePath := filepath.Join(path, "docs")
