@@ -1,8 +1,7 @@
-name: Go
-
+name: Update
 on:
   schedule:
-    - cron: '0 5 * * *'
+  - cron: '0 5 * * *'
 
 jobs:
 
@@ -20,7 +19,7 @@ jobs:
       run: git clone https://github.com/github/linguist data/linguist
 
     - name: mod
-      run: go mod tidy
+      run: go mod tidy && go get -u github.com/jteeuwen/go-bindata/...
     
     - name: generate
       run: go generate . &&  go generate ./data
