@@ -39,7 +39,9 @@ var (
 )
 
 func init() {
-	var regexps []string
+	var (
+		regexps []string
+	)
 	bytes := []byte(files["data/vendor.yml"])
 	if err := yaml.Unmarshal(bytes, &regexps); err != nil {
 		log.Fatal(err)
